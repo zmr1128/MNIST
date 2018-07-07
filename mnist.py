@@ -180,7 +180,7 @@ sess = tf.InteractiveSession()
 sess.run(tf.global_variables_initializer())
 for i in range(iter):
     minibatch_loss = 0
-    num_batch = int(m / BATCH_SIZE)
+    num_batches = int(m / BATCH_SIZE)
     seed+=1
     minibatches = batch(Train_data,Train_labels,BATCH_SIZE,seed)
 
@@ -193,7 +193,7 @@ for i in range(iter):
 
     losses.append(minibatch_loss)
     train_accuracy = accuracy.eval(feed_dict = {X:mini_batch_X, y:mini_batch_Y, keep_prob:1.0})
-    print ('epoch %d, loss %g, training accuracy %g' %(i,loss, train_accuracy))
+    print ('epoch %d, loss %g, training accuracy %g' %(i,minibatch_loss, train_accuracy))
 
 # Visualize stats
 print('dev accuracy %g'%accuracy.eval(feed_dict = {X:Dev_data,y:Dev_labels, keep_prob:1.0}))
