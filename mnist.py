@@ -9,9 +9,9 @@ import math
 from matplotlib import pyplot as plt
 
 # Load data
-train = pd.read_csv('Projects/MNIST/train.csv')
+train = pd.read_csv('Data/train.csv')
 print(train.shape)
-test = pd.read_csv('Projects/MNIST/test.csv')
+test = pd.read_csv('Data/test.csv')
 print(test.shape)
 X_train = (train.ix[:,1:].values).astype('float32')
 y_train = (train.ix[:,0].values).astype('int32')
@@ -21,8 +21,8 @@ X_test = test.values.astype(np.float)
 # cv2.waitKey(0)
 
 # Preprocess and reshape as 28 x 28 matrices
-X_train = X_train.reshape(X_train.shape[0], 28,28,1)
-X_test = X_test.reshape(X_test.shape[0], 28,28,1)
+# X_train = X_train.reshape(X_train.shape[0], 28,28,1)
+# X_test = X_test.reshape(X_test.shape[0], 28,28,1)
 # print(X_train.shape)
 # print(X_test.shape)
 
@@ -155,14 +155,14 @@ def batch(X,Y,size,seed = 0):
 
 # Parameters
 BATCH_SIZE = 512
-iter = 50
+iter = 100
 prob = 0.5
 
 # Learning rate with exponential decay
 global_step = tf.Variable(0, trainable=False)
-initial_lr = 0.1
+initial_lr = 1e-2
 Decay_rate = 0.96
-Decay_steps = 10
+Decay_steps = 50
 learning_rate = tf.train.exponential_decay(initial_lr, global_step, Decay_steps, Decay_rate, staircase=True)
 
 
@@ -207,7 +207,7 @@ plt.show()
 y_pred = predict.eval(feed_dict={X: X_test, keep_prob: 1.0})
 
 # Save results
-np.savetxt('Projects/MNIST/submission.csv',np.c_[range(1,len(X_test)+1),y_pred],delimiter = ',', header = 'ImageId,Label',comments = '',fmt = '%d')
+np.savetxt('Data/submission.csv',np.c_[range(1,len(X_test)+1),y_pred],delimiter = ',', header = 'ImageId,Label',comments = '',fmt = '%d')
 
 # end session
 sess.close()
